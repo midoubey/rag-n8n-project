@@ -14,6 +14,9 @@
 
 ![RAG Workflow](assets/rag-workflow-overview.png)
 
+### 🎥 Demo Video
+[Watch RAG Workflow Demo](https://drive.google.com/file/d/12F_Amc7_MdWtWkjZJ_n_6dkXfhrz_5w_/view?usp=sharing)
+
 ### 2️⃣ WhatsApp Lead Capture Workflow
 - Folder: `WhatsApp/`
 - File: `whatsapp_lead_capture_workflow.json`
@@ -27,6 +30,9 @@
   - ## 📸 Workflow Screenshot
 
 ![WhatsApp Workflow](assets/whatsapp-workflow-overview.png)
+
+### 🎥 Demo Video
+[Watch WhatsApp Lead Capture Demo](https://drive.google.com/file/d/1u1U_oU16HVOsCGgcriSygLxluNof1NAC/view?usp=sharing)
 
 
 ## 🛠 Tech Stack
