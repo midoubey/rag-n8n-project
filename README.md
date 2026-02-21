@@ -11,9 +11,21 @@
   - Multi-step workflow with logic branching
   - API-ready integration
 
+### 2️⃣ WhatsApp Lead Capture Workflow
+- Folder: `WhatsApp/`
+- File: `whatsapp_lead_capture_workflow.json`
+- Features:
+  - Captures leads automatically from WhatsApp
+  - Answers user questions using AI
+  - Stores lead info via structured n8n workflow
+  - Sends email notifications for new leads
+  - Multi-step logic with integrations
+  - API-ready for CRM or Google Sheets
+
+
 ## 🛠 Tech Stack
 - n8n
-- JavaScript nodes (if used)
+- JavaScript nodes 
 - OpenAI API
 
 ## 📂 Repository Structure
@@ -29,12 +41,21 @@ n8n_projects/
 └─ LICENSE
 ```
 
-## 📌 How It Works (RAG)
+## 📌 How It Works
+
+## RAG Workflow
 1. Documents ingested and processed  
 2. Text embedded into vectors  
 3. User queries trigger workflow  
 4. Relevant context retrieved  
 5. AI generates responses  
+
+## WhatsApp Lead Capture Workflow
+1. User sends a message via WhatsApp  
+2. Workflow analyzes question using AI  
+3. Lead info is captured and stored  
+4. Email notification sent for new leads  
+5. Data ready for CRM or Google Sheets
 
 ## ✨ Author
 **M’hammed Bey Omar**  
