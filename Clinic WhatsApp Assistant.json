@@ -1,0 +1,946 @@
+{
+  "name": "Clinic WhatsApp Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "70a651d0-37fa-4fb4-98c3-357c2ade08f8",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1648,
+        -560
+      ],
+      "id": "73f4a87f-453f-49dc-a66e-7968f0e570b3",
+      "name": "Webhook",
+      "webhookId": "70a651d0-37fa-4fb4-98c3-357c2ade08f8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6670addd-7ad7-4924-be82-9bd3ea29fff1",
+              "name": "Text",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -688,
+        -640
+      ],
+      "id": "39268377-1e11-48ef-9567-887378e934f5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.data.message.conversation }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "ec02ea13-aa2c-42c7-bdc6-94cea50ee835"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b86c1b14-79dc-45c2-bd5d-d9c705c61977",
+                    "leftValue": "={{ $json.body.data.message.audioMessage }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b4770b18-ee53-40bc-a6fc-4e86a2f5aeff",
+                    "leftValue": "={{ $json.body.data.messageType }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1472,
+        -576
+      ],
+      "id": "080e25f5-247f-45f9-92b8-1cc88ca7a20a",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "={{ $json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        288,
+        -656
+      ],
+      "id": "852d038a-a7e0-44f1-9247-06a8c53979a2",
+      "name": "Send text",
+      "credentials": {
+        "evolutionApi": {
+          "id": "vW63ixH9HsaMy2Y9",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -608,
+        -48
+      ],
+      "id": "9c6ee807-818b-4c27-a323-d0ca0b1f9caa",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {
+          "mimeType": "audio/ogg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1056,
+        -480
+      ],
+      "id": "1e30a725-2156-4c99-afd6-c2f9dba277ae",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -864,
+        -480
+      ],
+      "id": "e619dd88-1c25-41aa-af7c-f8813f81be3b",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6276a5b7-73ea-436d-881a-ace9d618eca6",
+              "name": "Text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -688,
+        -480
+      ],
+      "id": "f2ba00fc-9773-453c-9a4a-9211a3833c69",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1072,
+        -288
+      ],
+      "id": "1052f7ed-babf-4ba9-bba2-088403ab23e2",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -880,
+        -288
+      ],
+      "id": "9bc9eaf0-441d-4e68-932a-88b10367f618",
+      "name": "Analyze image",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6276a5b7-73ea-436d-881a-ace9d618eca6",
+              "name": "Text",
+              "value": "={{ $json['0'].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -688,
+        -288
+      ],
+      "id": "66df2e06-0d4e-4483-b130-767b29cad6d6",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "contextWindowLength": 6
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -464,
+        -48
+      ],
+      "id": "0fbcdf0d-0db1-48bf-8bd4-f81d5ab60764",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "izU70MXQPzuf1dhD",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -240
+      ],
+      "id": "bc741e83-cf1f-47c2-93cb-cb059256b20d",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        -1184
+      ],
+      "id": "f486afd3-5705-46fa-8fd1-9f1efb84676f",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "OtvRBQRnUkUqXwcZ",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -1008
+      ],
+      "id": "ba95830d-9942-4dbb-96c1-72fbb1e08624",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        496,
+        -992
+      ],
+      "id": "33832cfb-c85b-4933-87de-fe5068dc19ca",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -896
+      ],
+      "id": "382332d7-b6c0-4345-897b-077f1067347b",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1C0JIxffX54slVKGfUi2DYENaPzfAhenM",
+          "mode": "list",
+          "cachedResultName": "clinic_example_supabase_project.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1C0JIxffX54slVKGfUi2DYENaPzfAhenM/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -1168
+      ],
+      "id": "e7b3cabf-2b62-402c-9047-847989b2b49c",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ILqGqYBaldlUTI6f",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Text }}",
+        "options": {
+          "systemMessage": "=You are Clinic_Assistant, a virtual assistant for Oran Wellness Clinic. \nYour task is to assist patients via WhatsApp by providing accurate information about the clinic, services, pricing, doctors, appointments, and policies. \nYou also manage bookings automatically using linked Google Calendars and store/retrieve conversation context via Supabase vector store and Postgres chat memory.\n\nWorkflow Awareness:\n\n1. Knowledge Retrieval:\n   - ALWAYS use the clinic knowledge stored in Supabase (vector store) for answering questions. \n   - NEVER hallucinate information; if not found, reply politely: \n     \"I’m sorry, I don’t have that information. Please contact the clinic directly.\"\n\n2. Conversation Memory:\n   - Use Postgres chat memory for ongoing sessions. \n   - Session ID corresponds to the user’s WhatsApp phone number. \n   - Keep context across multiple messages from the same user.\n\n3. Appointment Management:\n   - You can create, get, update, and delete events using the connected Google Calendars. \n   \n   - Suggest only real available slots, if requested slot is unavailable, offer alternatives. \n   - Confirm bookings and send WhatsApp confirmation templates automatically.\n\n4. Messaging Guidelines:\n   - Always reply politely, professionally, and friendly. \n   - Keep replies concise (2–4 sentences). \n   - Use patient’s name if available. \n   - Follow templates for booking confirmations, reminders, and follow-ups.\n\n5. Services & Doctors:\n   - Provide accurate information about services, prices, doctors’ specialties, and schedules. \n   - Map user requests to the right doctor/service using vector search. \n   - Example: For Botox, mention Dr. Amina Cherif if applicable.\n\n6. Privacy & Compliance:\n   - Do not share personal data outside the session. \n   - Respect protected health information (PHI) and clinic policies. \n   - All sensitive information should remain in Postgres/Supabase.\n\n7. Handling Out-of-Scope Questions:\n   - Politely inform the user if the question is unrelated to the clinic: \n     \"I’m here to assist with Oran Wellness Clinic services. For other inquiries, please contact the clinic directly.\"\n\nGoal:\nAssist patients efficiently, accurately, and politely. Retrieve answers from Supabase vector store, maintain context in Postgres chat memory, and manage appointments automatically through Google Calendar nodes in n8n. Always ensure the user receives correct, actionable information and booking confirmations."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -288,
+        -656
+      ],
+      "id": "a45d379d-d252-46b3-8eb6-cb62c688194f",
+      "name": "Clinic_Assistant"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "location": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Location', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -272,
+        -240
+      ],
+      "id": "e79479e3-c3aa-4461-b78a-1078b8ee7f03",
+      "name": "Create Appointment",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "oddEEjb054mOHs8x",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        -240
+      ],
+      "id": "aae489d8-5187-4cf1-b993-728ec386c1e7",
+      "name": "Cancel Appointment",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "oddEEjb054mOHs8x",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        -240
+      ],
+      "id": "4cd6ee64-5767-4f4f-a142-8434ed1e49a0",
+      "name": "Check Availability",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "oddEEjb054mOHs8x",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        -240
+      ],
+      "id": "38589b61-089b-4749-803a-023b035fe472",
+      "name": "Reschedule Appointment",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "oddEEjb054mOHs8x",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "get-media-base64",
+        "instanceName": "={{ $json.body.instance }}",
+        "messageId": "={{ $json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1232,
+        -480
+      ],
+      "id": "14356818-0989-4790-9753-9f0934d85ed5",
+      "name": "Get Audio",
+      "credentials": {
+        "evolutionApi": {
+          "id": "vW63ixH9HsaMy2Y9",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "get-media-base64",
+        "instanceName": "={{ $json.body.instance }}",
+        "messageId": "={{ $json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api-english.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -1248,
+        -288
+      ],
+      "id": "a3b03158-8a20-42b5-a3db-d5836e658499",
+      "name": "Get image",
+      "credentials": {
+        "evolutionApi": {
+          "id": "vW63ixH9HsaMy2Y9",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Extract info about the doctors, clinic, pricing, address, availibility, ect ...",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": 20,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        -384
+      ],
+      "id": "8a5cbf37-affe-48f7-bfd7-ef4bad8b55ac",
+      "name": "Retrieve_Clinic_info",
+      "credentials": {
+        "supabaseApi": {
+          "id": "OtvRBQRnUkUqXwcZ",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Retrieve_Clinic_info",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clinic_Assistant": {
+      "main": [
+        [
+          {
+            "node": "Send text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Availability": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reschedule Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Audio": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get image": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve_Clinic_info": {
+      "ai_tool": [
+        [
+          {
+            "node": "Clinic_Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "cfc82630-1103-4a3e-8a28-d00bc3febd3e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da60b27557f3c99d7b93365e65c0ab8b54385fd2c972da7daceeb5515229036c"
+  },
+  "id": "kjM18jMdAMj183_7WXdOu",
+  "tags": []
+}
