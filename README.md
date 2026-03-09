@@ -7,7 +7,7 @@
 - File: `clinic_whatsapp_assistant_workflow.json`
 - Features:
   - Fully automated AI-powered clinic assistant
-  - Receives patient messages via WhatsApp
+  - Receives patient messages via WhatsApp (text, voice notes, and images)
   - Answers questions about services, doctors, pricing, and FAQs using a vector knowledge base (Supabase + OpenAI embeddings)
   - Maintains chat memory per patient for multi-day conversations
   - Books, reschedules, and cancels appointments automatically via Google Calendar
@@ -17,8 +17,7 @@
 - ## 📸 Workflow Screenshot
 ![Clinic WhatsApp Workflow](assets/Clinic_WhatsApp_Assistant.png)
 
-### 🎥 Demo Video
-[Watch Clinic WhatsApp Assistant Demo](#) 
+
 
 
 ### 2️⃣ RAG Workflow
@@ -83,9 +82,9 @@ n8n_projects/
 ## 📌 How It Works
 
 ### Clinic WhatsApp Assistant Workflow
-1. Patient sends a message via WhatsApp  
-2. Workflow analyzes the question using AI embeddings  
-3. Patient info and conversation context stored in Supabase  
+1. Patient sends a message via WhatsApp (text, voice note, or image)
+2. Workflow analyzes the question using AI embeddings 
+3. Patient info and conversation context stored in Supabase
 4. Workflow books/reschedules/cancels appointments via Google Calendar  
 5. Sends confirmation and reminder messages via WhatsApp  
 6. Data is ready for clinic CRM or other systems
