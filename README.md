@@ -15,7 +15,7 @@
   - Multi-step workflow with logic branching
   - API-ready for integration with clinic systems
 - ## 📸 Workflow Screenshot
-![Clinic WhatsApp Workflow](assets/Clinic_WhatsApp_Assistant.png)
+![Clinic WhatsApp Workflow](assets/Clinic_WhatsApp _Assistant.png)
 
 ### 🎥 Demo Video
 [Watch Clinic WhatsApp Assistant Demo](#) 
