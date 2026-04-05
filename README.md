@@ -2,7 +2,24 @@
 
 ## 🚀 Projects
 
-### 1️⃣ Clinic WhatsApp Assistant Workflow
+### 1️⃣ AI Email Automation System
+- Folder: `EmailAutomation/`
+- File: `Email_automation.json`
+- Features:
+  - AI-powered email classification (Sales, Support, Finance, HR, etc.)
+  - Automatic Gmail labeling based on email intent
+  - Multi-agent system (specialized AI agents for each department)
+  - Context-aware response generation (draft or auto-reply)
+  - Customer Support agent connected to Google Docs knowledge base
+  - Telegram notifications for real-time updates (draft created, important emails, alerts)
+  - CRM logging of support tickets using Google Sheets
+  - Multi-step workflow with advanced routing and logic branching
+  - Scalable and modular architecture
+- ## 📸 Workflow Screenshot
+![AI Email Automation Workflow](assets/Email_Automation_Workflow.png)
+
+
+### 2️⃣ Clinic WhatsApp Assistant Workflow
 - Folder: `ClinicWhatsApp/`
 - File: `clinic_whatsapp_assistant_workflow.json`
 - Features:
@@ -20,7 +37,7 @@
 
 
 
-### 2️⃣ RAG Workflow
+### 3️⃣ RAG Workflow
 - Folder: `RAG/`
 - File: `rag-document-retrieval-workflow.json`
 - Features:
@@ -35,7 +52,7 @@
 [Watch RAG Workflow Demo](https://drive.google.com/file/d/12F_Amc7_MdWtWkjZJ_n_6dkXfhrz_5w_/view?usp=sharing)
 
 
-### 3️⃣ WhatsApp Lead Capture Workflow
+### 4️⃣ WhatsApp Lead Capture Workflow
 - Folder: `WhatsApp/`
 - File: `whatsapp_lead_capture_workflow.json`
 - Features:
@@ -65,6 +82,8 @@
 ## 📂 Repository Structure
 
 n8n_projects/
+├─ EmailAutomation/
+│ └─ email_automation_workflow.json
 ├─ ClinicWhatsApp/
 │ └─ clinic_whatsapp_assistant_workflow.json
 ├─ RAG/
@@ -80,6 +99,15 @@ n8n_projects/
 
 
 ## 📌 How It Works
+
+### AI Email Automation System
+1. Emails arrive in Gmail  
+2. Workflow classifies email into Sales, Support, Finance, HR, etc.  
+3. Appropriate AI agent generates draft or auto-reply based on context  
+4. Customer Support agent references Google Docs knowledge base if needed  
+5. Gmail labels applied automatically  
+6. Telegram notifications sent for important updates  
+7. Tickets logged to Google Sheets CRM  
 
 ### Clinic WhatsApp Assistant Workflow
 1. Patient sends a message via WhatsApp (text, voice note, or image)
