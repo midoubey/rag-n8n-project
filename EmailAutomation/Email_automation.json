@@ -1,1 +1,1391 @@
-
+{
+  "name": "Email_automation",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -336,
+        0
+      ],
+      "id": "167514d5-4500-411b-9d2a-37fcfc61f618",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AB5txygZMGdB4BEX",
+          "name": "bey.mhammedACC"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=subject: {{ $json.Subject }}\nEmail body : {{ $json.snippet }}\n",
+        "categories": {
+          "categories": [
+            {
+              "category": "Sales / Leads",
+              "description": "Incoming emails related to new customer inquiries, quote requests, or sales opportunities."
+            },
+            {
+              "category": "Customer Support",
+              "description": "Emails from customers needing help, reporting issues, or following up on support tickets."
+            },
+            {
+              "category": "Operations / Admin",
+              "description": "administrative tasks, or team members communicating "
+            },
+            {
+              "category": "Finance / Billing",
+              "description": "Invoices, receipts, payment issues, and financial documentation or queries."
+            },
+            {
+              "category": "Marketing/ promotions",
+              "description": "Messages about campaigns, promotions, content, advertising, or collaborations"
+            },
+            {
+              "category": "Human Resources",
+              "description": "uman Resources (HR) Emails about hiring, job applications, interviews, employee matters, or contracts."
+            },
+            {
+              "category": "Legal & Compliance",
+              "description": "Legal agreements, contracts, policy discussions, or compliance-related content."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -64,
+        -80
+      ],
+      "id": "14a2f610-16eb-4ab1-8566-bd0c7fa478e7",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_8228644962133492515"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        -704
+      ],
+      "id": "04c9f3ec-b2d9-42b0-9072-33a67c436288",
+      "name": "Sales/Leads",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_6873583081769207379"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        -448
+      ],
+      "id": "00504964-d9f2-4214-ac93-6781a8e60033",
+      "name": "Customer Support",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_5647669285582660279"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        -160
+      ],
+      "id": "e0502508-74cd-49db-9afc-3b31e49b7dcf",
+      "name": "Operations/Admin",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_8287827261491195268"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        96
+      ],
+      "id": "29583a7c-51aa-49a2-a2ef-479a30f4bfe3",
+      "name": "Finance/Billing",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_3081340342929977536"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        336
+      ],
+      "id": "ec8da704-0186-4497-9868-b5a99b0f10ef",
+      "name": "Human Resources (HR)",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_8512855693994087494"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        560
+      ],
+      "id": "d488aaa8-be71-4ef5-bc95-89ae853c480c",
+      "name": "Legal&Compliance",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_511229284745329923"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        736
+      ],
+      "id": "1934a6b2-6673-43b2-bd67-6023f29a1f40",
+      "name": "Marketing/Promotions",
+      "webhookId": "0fde157a-9b0c-41c4-8ff9-939b6646fcbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.email_response }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger').item.json.From }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1216,
+        -704
+      ],
+      "id": "09fcb8da-93f4-4372-9dd1-8cc8962464bf",
+      "name": "Create a draft",
+      "webhookId": "e944ef78-cc6e-41e6-8711-e3922fcaca7a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer email:\n\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nEmail Body:{{ $('Gmail Trigger').item.json.snippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Role:\nYou are a professional AI email assistant trained to summarise emails\n\nTask:\nRead and interpret the customer’s email.\n\nSummarise the email.\n\nDraft a professional and friendly reply that addresses the customer’s needs or concerns.\n\nWhen Signing off You must always sign off like this: \n\nMhammed Bey, \n\nOwner.\n\nthanks. \n\n\nGiven the input email, create a JSON object with fields ensure that there are spaces and paragraphs just like a email:\n\n{\n  \"subject\": \"Summary subject here\",\n  \"body\": \"Summary body here\"\n}\n\nOutput ONLY the JSON, no extra text."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        -704
+      ],
+      "id": "5c8b8102-5486-449f-b1e0-9fd48643413d",
+      "name": "Sales & Leads Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer email :\nsubject : {{ $('Gmail Trigger').item.json.Subject }}\nEmail body : {{ $('Gmail Trigger').item.json.snippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=##Role\n\nYou are a helpful AI customer service agent for Beauty & Co, an ecommerce beauty company. Your primary role is to assist customers with their questions and provide exceptional customer support.\n\n##Core Responsibilities\n\n-Answer customer inquiries by referencing the knowledge base\n-Provide accurate, helpful information about products, orders, and services\n-Maintain a friendly, professional, and conversational tone\n-Keep responses short, concise, and easy to understand\n-Create summaries and support tickets for CRM documentation\n\n#Task\n\n-New Inquiry: When a customer inquiry comes in, immediately search the knowledge base for relevant information\n-Match Information: Find the most accurate and relevant information from the knowledge base that addresses the customer's question\n-Respond: Provide a clear, concise answer using the knowledge base information.\n- Documentation: At the end of each conversation, create a summary and support ticket for CRM storage\n\n## \nPost-Conversation Tasks\nAfter each customer interaction, create:\n\n- Conversation Summary: Brief overview of the customer's issue and resolution provided\n-Support Ticket: Detailed record including:\n\nCustomer information\nIssue category\nResolution steps taken\nKnowledge Base Usage\n\nAlways check the knowledge base first before responding\nIf information isn't available in the knowledge base, acknowledge this and offer to escalate or follow up\nEnsure accuracy by matching customer questions to the most relevant knowledge base articles.\n\nIMPORTANT!!!! \n\nensure that there are spaces and paragraphs just like a email. \n\nE.g: \n\nHey john, \n\nthanks for the question! \n\nyes we do have that in stock! \n\nMhammed,\n\nProduct support. \n\n\nAt the end of your message, return only the following JSON object. ensure that there are spaces and paragraphs just like a email Do not include additional text:\n\njson\nCopy\nEdit\n{\n  \"subject\": \"\",\n  \"email_response\": \"\",\n  \"customer_inquiry_reason\": \"\",\n  \"summary\": \"\",\n  \"status\": \"resolved\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        -448
+      ],
+      "id": "a0782d04-2046-4ad0-bb0d-ff6d9b143950",
+      "name": "Customer Support Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer email:\n\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nEmail Body:{{ $('Gmail Trigger').item.json.snippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Role:\nYou are a professional AI email operations & admin assistant trained to summarise emails.\n\nTask:\nRead and interpret the customer’s email.\n\nSummarise the email.\n\nDraft a professional and friendly reply that addresses the customer’s needs or concerns.\n\nExample: \n\nThanks for that tracy, i will pass that on to the tech team. \n\nThanks\n\nWhen Signing off You must always sign off like this: \n\nMhammed Bey, \n\nOwner.\n\nthanks. \n\n\nGiven the input email, create a JSON object with fields ensure that there are spaces and paragraphs just like a email:\n\n{\n  \"subject\": \"Summary subject here\",\n  \"body\": \"Summary body here\"\n}\n\nOutput ONLY the JSON, no extra text. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        736,
+        -160
+      ],
+      "id": "46935e51-d180-4435-b30d-7c090ee178e6",
+      "name": "Operations & Admin Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer email:\n\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nEmail Body:{{ $('Gmail Trigger').item.json.snippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Role:\nYou are a professional AI Finance & Billing assistant trained to summarise emails.\n\nTask:\nRead and interpret the customer’s email.\n\nSummarise the email.\n\nDraft a professional and friendly reply that addresses the customer’s needs or concerns.\n\nExample: \n\nThanks for that tracy, i will pass that on to the tech team. \n\nThanks\n\nWhen Signing off You must always sign off like this: \n\nMhammed Bey, \n\nOwner.\n\nthanks. \n\n\nGiven the input email, create a JSON object with fields ensure that there are spaces and paragraphs just like a email:\n\n{\n  \"subject\": \"Summary subject here\",\n  \"body\": \"Summary body here\"\n}\n\nOutput ONLY the JSON, no extra text. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        96
+      ],
+      "id": "9fd9da05-6548-4408-a8c7-ffddd538cd53",
+      "name": "Finance & Billing Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer email:\n\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nEmail Body:{{ $('Gmail Trigger').item.json.snippet }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Role:\nYou are a professional AI Finance & Billing assistant trained to summarise emails.\n\nTask:\nRead and interpret the customer’s email.\n\nSummarise the email.\n\nDraft a professional and friendly reply that addresses the customer’s needs or concerns.\n\nExample: \n\nThanks for that tracy, i will pass that on to the tech team. \n\nThanks\n\nWhen Signing off You must always sign off like this: \n\nMhammed Bey, \n\nOwner.\n\nthanks. \n\n\nGiven the input email, create a JSON object with fields ensure that there are spaces and paragraphs just like a email:\n\n{\n  \"subject\": \"Summary subject here\",\n  \"body\": \"Summary body here\"\n}\n\nOutput ONLY the JSON, no extra text. "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        336
+      ],
+      "id": "6a99c175-7a4a-45b5-8118-bed3ddc1d6c6",
+      "name": "Human & Recourses Agent"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.email_response }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger').item.json.From }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        -160
+      ],
+      "id": "2eeb8a36-2ac7-4f55-a6a7-0bc8f609b297",
+      "name": "Create a draft2",
+      "webhookId": "e944ef78-cc6e-41e6-8711-e3922fcaca7a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.email_response }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger').item.json.From }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        336
+      ],
+      "id": "5ae9baa5-d946-450b-a2d0-5d81ec877e89",
+      "name": "Create a draft4",
+      "webhookId": "e944ef78-cc6e-41e6-8711-e3922fcaca7a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        864,
+        736
+      ],
+      "id": "f1a571c3-9976-4607-89f0-66fe93ea1b50",
+      "name": "Mark a message as read",
+      "webhookId": "8c5de881-3b1c-45e5-b962-025962523d27",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Gmail Trigger').item.json.From }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.email_response }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        96
+      ],
+      "id": "ac75c5e2-d54a-47ec-a583-df9315c94a7f",
+      "name": "Send a message",
+      "webhookId": "545dea73-5b7b-4ba6-b3bb-0a955a34987f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Gmail Trigger').item.json.From }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.email_response }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        -448
+      ],
+      "id": "bbe259e0-46a8-474d-a998-b25fc82146cb",
+      "name": "Send a message1",
+      "webhookId": "1f3c8d5d-2686-4625-aeb8-3880ad383e80",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "l7g6YVPr5BUkug47",
+          "name": "Gmail account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "You have a new lead & sales email. A draft has been created in your inbox, please review the email and send it.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1504,
+        -704
+      ],
+      "id": "fce3483b-fca8-4c96-9e7d-b30cedd85e1c",
+      "name": "Internal Alert",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "=You have a new customer support inquiry. Their ticket and information has been entered in the crm. Reason for the reachout {{ $('Customer Support Agent').item.json.output.customer_inquiry_reason }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1632,
+        -448
+      ],
+      "id": "f2cb15a6-85d5-414f-8329-0a19a6f6b098",
+      "name": "Internal Alert1",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "You have a new operations email. A draft has been created in your inbox, please review the email and send it.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1488,
+        -160
+      ],
+      "id": "5884dd04-f197-431b-8138-d9fd3b2318d3",
+      "name": "Internal Alert2",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "You have a new finace email. A response has been sent in your inbox, please review the email and send it.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1488,
+        96
+      ],
+      "id": "192019dc-ad69-4dc3-a603-873838ca5091",
+      "name": "Internal Alert3",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "You have a new HR email. A draft has been created in your inbox, please review the email and send it.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1504,
+        336
+      ],
+      "id": "fb70cca6-dc2d-4b63-9a08-122f9e0dbdce",
+      "name": "Internal Alert4",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5760543842",
+        "text": "=You have a new legal issue. Please review the email. Here are the details.\n\nCustomer Email: {{ $('Gmail Trigger').item.json.From }}\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nBody: {{ $('Gmail Trigger').item.json.snippet }}\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        560
+      ],
+      "id": "a78af861-5d4a-40a2-bfa3-15015e2b5086",
+      "name": "Internal Alert5",
+      "webhookId": "778ee899-8dcc-4165-881d-9ec42834cb37",
+      "credentials": {
+        "telegramApi": {
+          "id": "m4auzwE80sUX5465",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "https://docs.google.com/document/d/10GuiozDWxXIqbzy6JFuOtBEZwtcgYQTCvAV-bNw6p44/edit?tab=t.0#heading=h.wy2iq1294u6x"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        880,
+        -304
+      ],
+      "id": "8a03e6e7-89e4-448d-beb0-0cac676744ae",
+      "name": "Company_Data",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "zoB2PViSKowfn9Cd",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        -592
+      ],
+      "id": "b4d76d7d-e72b-43c3-990a-cbcaf436950c",
+      "name": "LLM",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        -336
+      ],
+      "id": "1ce6baa0-2df8-47a6-a884-36e5e0d2be3c",
+      "name": "LLM1",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        -48
+      ],
+      "id": "92940506-16a7-4d69-b43a-a1c4fb60bc90",
+      "name": "LLM2",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        208
+      ],
+      "id": "e798f27e-ba9f-43e3-8211-ce8fdd39a2a4",
+      "name": "LLM3",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        448
+      ],
+      "id": "7b15cae9-ad00-41c8-9eb9-399e6e3caeb4",
+      "name": "LLM4",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"subject\": \"string\",\n  \"email_response\": \"string\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        -624
+      ],
+      "id": "d5c3740a-c08d-4c1b-86df-bc64901be655",
+      "name": "Parser"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"subject\": \"string\",\n  \"email_response\": \"string\",\n  \"customer_inquiry_reason\": \"string\",\n  \"summary\": \"string\",\n  \"status\": \"string\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        -352
+      ],
+      "id": "0a31de0a-f66e-433b-bbd8-fd891c17c85b",
+      "name": "Parser1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"subject\": \"string\",\n  \"email_response\": \"string\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        -80
+      ],
+      "id": "fc57c4de-4789-4c22-9211-07d31bf7e8ae",
+      "name": "Parser2"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"subject\": \"string\",\n  \"email_response\": \"string\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        192
+      ],
+      "id": "6941aadb-99d8-4983-81bb-a6822f079574",
+      "name": "Parser3"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"subject\": \"string\",\n  \"email_response\": \"string\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        432
+      ],
+      "id": "97aff7ac-1f81-485f-90d8-5957ac084cef",
+      "name": "Parser4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1vR4s-NbmmkgIRy2q9YD7kN9SnziZuNO7i-alr5RL4Do",
+          "mode": "list",
+          "cachedResultName": "Customer_Support_Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vR4s-NbmmkgIRy2q9YD7kN9SnziZuNO7i-alr5RL4Do/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vR4s-NbmmkgIRy2q9YD7kN9SnziZuNO7i-alr5RL4Do/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "={{ $('Customer Support Agent').item.json.output.status }}",
+            "Notes / Summary": "={{ $('Customer Support Agent').item.json.output.summary }}",
+            "inquiry reason": "={{ $('Customer Support Agent').item.json.output.customer_inquiry_reason }}",
+            "Customer email": "={{ $('Gmail Trigger').item.json.From }}",
+            "Source": "Customer Support Ticket"
+          },
+          "matchingColumns": [
+            "Customer email"
+          ],
+          "schema": [
+            {
+              "id": "Customer email",
+              "displayName": "Customer email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "inquiry reason",
+              "displayName": "inquiry reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notes / Summary",
+              "displayName": "Notes / Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1424,
+        -448
+      ],
+      "id": "fd38912a-51ec-488b-8511-91e72955b56f",
+      "name": "CRM – Save Ticket",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nNIGOpgpg2IoV2sV",
+          "name": "Google Sheets account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        256
+      ],
+      "id": "5f410d94-926e-46cf-9029-238a258afe58",
+      "name": "LLM5",
+      "credentials": {
+        "openAiApi": {
+          "id": "GsNyprMxxTZetzsz",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Sales/Leads",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Customer Support",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Operations/Admin",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Finance/Billing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Marketing/Promotions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Human Resources (HR)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Legal&Compliance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sales/Leads": {
+      "main": [
+        [
+          {
+            "node": "Sales & Leads Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Support": {
+      "main": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operations/Admin": {
+      "main": [
+        [
+          {
+            "node": "Operations & Admin Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finance/Billing": {
+      "main": [
+        [
+          {
+            "node": "Finance & Billing Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Human Resources (HR)": {
+      "main": [
+        [
+          {
+            "node": "Human & Recourses Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Legal&Compliance": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marketing/Promotions": {
+      "main": [
+        [
+          {
+            "node": "Mark a message as read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sales & Leads Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Support Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operations & Admin Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a draft2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finance & Billing Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Human & Recourses Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a draft4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft2": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft4": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "CRM – Save Ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Internal Alert1": {
+      "main": [
+        []
+      ]
+    },
+    "Internal Alert5": {
+      "main": [
+        []
+      ]
+    },
+    "Company_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sales & Leads Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Operations & Admin Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Finance & Billing Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Human & Recourses Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Sales & Leads Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Customer Support Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Operations & Admin Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Finance & Billing Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Human & Recourses Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CRM – Save Ticket": {
+      "main": [
+        [
+          {
+            "node": "Internal Alert1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "2694d9c3-3546-4557-a359-800d6f42d37d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da60b27557f3c99d7b93365e65c0ab8b54385fd2c972da7daceeb5515229036c"
+  },
+  "id": "30mdWx0r0jCqPHS_OS4-N",
+  "tags": []
+}
